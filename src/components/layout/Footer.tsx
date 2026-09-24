@@ -1,9 +1,8 @@
 import { Leaf, Instagram, Facebook, Twitter, Mail } from 'lucide-react';
+import { Link } from 'wouter';
 import { useSubdomainContext } from '@/contexts/SubdomainContext';
-import { useContact } from '@/hooks/useContent';
-import { useTheme } from '@/hooks/useContent';import { Link } from 'wouter';
-import { useContact } from '@/hooks/useContent';
-import { useTheme } from '@/hooks/useContent';
+import { useContact, useTheme } from '@/hooks/useContent';
+
 export default function Footer() {
   const { data: contact } = useContact();
   const { organization } = useSubdomainContext();
@@ -21,24 +20,32 @@ export default function Footer() {
               ) : (
                 <Leaf className="w-6 h-6 text-primary" />
               )}
-              <span className="text-xl font-bold">{organization?.name || 'Artisan Crafts'}</span>
+              <span className="text-xl font-bold">{organization?.name}</span>
             </div>
             <p className="text-background/70 text-sm">
               Connecting artisans with people who appreciate authentic, handmade quality.
             </p>
             <div className="flex items-center space-x-4 mt-4">
-              <a href="#" className="hover:text-primary transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Mail className="w-5 h-5" />
-              </a>
+              {contact?.instagramUrl && (
+                <a href={contact.instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </a>
+              )}
+              {contact?.facebookUrl && (
+                <a href={contact.facebookUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  <Facebook className="w-5 h-5" />
+                </a>
+              )}
+              {contact?.twitterUrl && (
+                <a href={contact.twitterUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  <Twitter className="w-5 h-5" />
+                </a>
+              )}
+              {contact?.email && (
+                <a href={`mailto:${contact.email}`} className="hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -84,7 +91,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-background/20 pt-8 text-center text-sm text-background/70">
-          <p>&copy; {new Date().getFullYear()} {organization?.name || 'Artisan Crafts'}. Handcrafted with love.</p>
+          <p>&copy; {new Date().getFullYear()} {organization?.name}. Handcrafted with love.</p>
           <p className="mt-2 text-xs">
             Template powered by JMarkets | <a href="#" className="hover:text-primary transition-colors">Política de Privacidad</a> | <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
           </p>

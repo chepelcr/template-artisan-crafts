@@ -26,7 +26,7 @@ export default function Navbar() {
                 <Leaf className="w-8 h-8 text-primary" />
               )}
               <h1 className="text-2xl font-bold text-gradient-artisan">
-                {organization?.name || 'Artisan Crafts'}
+                {organization?.name}
               </h1>
             </a>
           </Link>
