@@ -174,7 +174,7 @@ All component styles are in `src/index.css` using Tailwind's `@layer components`
 
 ## License
 
-MIT License - Part of the JMarkets template collection
+MIT License - Part of the Tsuru template collection
 
 ## Version
 

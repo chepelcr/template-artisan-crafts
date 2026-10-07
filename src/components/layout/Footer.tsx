@@ -93,7 +93,7 @@ export default function Footer() {
         <div className="border-t border-background/20 pt-8 text-center text-sm text-background/70">
           <p>&copy; {new Date().getFullYear()} {organization?.name}. Handcrafted with love.</p>
           <p className="mt-2 text-xs">
-            Template powered by JMarkets | <a href="#" className="hover:text-primary transition-colors">Política de Privacidad</a> | <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+            Template powered by Tsuru | <a href="#" className="hover:text-primary transition-colors">Política de Privacidad</a> | <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
           </p>
         </div>
       </div>

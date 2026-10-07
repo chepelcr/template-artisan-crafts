@@ -119,7 +119,7 @@ The Artisan Crafts template has been successfully built following the multi-temp
 - 4-column layout (responsive)
 - Logo and description
 - Shop, About, Connect sections
-- Copyright and JMarkets credit
+- Copyright and Tsuru credit
 
 ## Build Configuration
 
