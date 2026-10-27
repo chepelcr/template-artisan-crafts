@@ -7,13 +7,18 @@
  * /contact and a 404. Old links (Ofertas, Servicios, Programas, categories,
  * account pages) resolve through `LegacyOrNotFound`.
  */
-import { useCallback, useMemo, type ComponentType, type ReactNode } from 'react';
+import { useCallback, useLayoutEffect, useMemo, type ComponentType, type ReactNode } from 'react';
 import { Redirect, Router, useLocation, useSearch } from 'wouter';
 import { catalogHref, parseCatalogParams, type CatalogParams } from './catalog-params';
 import { legacyRedirect } from './legacy-routes';
-import { viewTransitionNav } from './motion';
+import { prefersReducedMotion, viewTransitionNav } from './motion';
 
 export function StoreRouter({ children }: { children: ReactNode }) {
+  // Read a `?motion=reduce` override before the first paint, so templates whose
+  // motion is CSS only honour it too (core.css keys off `html[data-motion]`).
+  useLayoutEffect(() => {
+    prefersReducedMotion();
+  }, []);
   return <Router aroundNav={viewTransitionNav}>{children}</Router>;
 }
 
