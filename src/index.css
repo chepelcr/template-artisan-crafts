@@ -1,171 +1,270 @@
+@import './core/core.css';
+@import './theme/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Apply natural canvas background globally */
-  body {
-    @apply bg-background text-foreground font-serif;
-    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence baseFrequency="0.9" numOctaves="3" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.03" /%3E%3C/svg%3E');
-  }
-
-  /* Headings use Josefin Sans */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-sans;
-  }
-
-  /* Smooth scrolling */
   html {
-    scroll-behavior: smooth;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-text);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-weight: 700;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .on-deep :focus-visible {
+    outline-color: var(--focus-on-deep);
+  }
+
+  ::selection {
+    background: var(--ac-sun);
+    color: var(--ac-ink);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
   }
 }
 
 @layer components {
-  /* Artisan-style button variants */
-  .btn-artisan {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-sans font-semibold;
-    @apply shadow-artisan hover:shadow-artisan-lg transition-all duration-300;
-    @apply hover:bg-primary-700 active:scale-95;
+  .page {
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
-  .btn-artisan-secondary {
-    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-sans font-semibold;
-    @apply shadow-artisan hover:shadow-artisan-lg transition-all duration-300;
-    @apply hover:bg-secondary-800 active:scale-95;
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: var(--tap);
+    padding: 0.625rem 1.375rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: transform var(--dur-exit) var(--ease-out), background-color var(--dur-exit) ease, box-shadow var(--dur-exit) ease;
   }
 
-  .btn-artisan-outline {
-    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-sans font-semibold;
-    @apply hover:bg-primary hover:text-white transition-all duration-300;
-    @apply active:scale-95;
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
   }
 
-  /* Artisan-style card */
-  .card-artisan {
-    @apply bg-card rounded-xl p-6 border border-border;
-    @apply shadow-lg hover:shadow-artisan-lg transition-all duration-300;
-    @apply hover:-translate-y-1;
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
   }
 
-  /* Handcrafted badge */
-  .badge-artisan {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-sans font-semibold;
-    @apply bg-accent text-accent-foreground;
-    @apply shadow-sm;
+  .btn-accent {
+    background: var(--accent);
+    color: var(--accent-ink);
   }
 
-  .badge-new {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-sans font-semibold;
-    @apply bg-secondary text-secondary-foreground;
+  .btn-accent:hover:not(:disabled) {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
   }
 
-  .badge-sale {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-sans font-semibold;
-    @apply bg-primary text-primary-foreground;
-    @apply animate-pulse;
+  .btn-strong {
+    background: var(--ac-cobalt);
+    color: #FFFFFF;
   }
 
-  /* Organic container */
-  .container-organic {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  .btn-strong:hover:not(:disabled) {
+    background: var(--ac-cobalt-lift);
   }
 
-  /* Textured section */
-  .section-textured {
-    @apply relative;
-    background-image:
-      linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fffbeb 100%),
-      url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence baseFrequency="0.9" numOctaves="3" /%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noise)" opacity="0.05" /%3E%3C/svg%3E');
+  .btn-quiet {
+    background: var(--surface-raised);
+    color: var(--heading);
+    box-shadow: inset 0 0 0 2px var(--rule);
   }
 
-  /* Hand-drawn underline effect */
-  .handdrawn-underline {
-    @apply relative;
+  .btn-quiet:hover:not(:disabled) {
+    box-shadow: inset 0 0 0 2px var(--heading);
   }
 
-  .handdrawn-underline::after {
-    content: '';
-    @apply absolute left-0 bottom-0 w-full h-0.5 bg-primary;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+  .btn-sun {
+    background: var(--ac-sun);
+    color: var(--ac-ink);
   }
 
-  .handdrawn-underline:hover::after {
-    transform: scaleX(1);
+  .btn-sun:hover:not(:disabled) {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac-sun) 35%, transparent);
   }
 
-  /* Product grid */
-  .product-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+  .btn-on-deep {
+    background: transparent;
+    color: var(--ink-on-deep);
+    box-shadow: inset 0 0 0 2px var(--rule-on-deep);
   }
 
-  /* Organic input */
-  .input-organic {
-    @apply w-full px-4 py-3 rounded-lg border border-border;
-    @apply bg-card text-foreground;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
-    @apply transition-all duration-200;
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--tap);
+    min-height: var(--tap);
+    border-radius: var(--radius-pill);
   }
 
-  /* Artisan hero section */
-  .hero-artisan {
-    @apply relative min-h-[500px] flex items-center justify-center;
-    @apply bg-gradient-artisan;
-    @apply overflow-hidden;
+  .gloss {
+    display: none;
   }
 
-  .hero-artisan::before {
-    content: '';
-    @apply absolute inset-0 opacity-10;
-    background-image: url('data:image/svg+xml,%3Csvg width="200" height="200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence baseFrequency="0.65" numOctaves="3" /%3E%3C/filter%3E%3Crect width="200" height="200" filter="url(%23noise)" /%3E%3C/svg%3E');
+  .frame {
+    border-radius: var(--radius-frame);
+    overflow: hidden;
+  }
+
+  .frame-sm {
+    border-radius: var(--radius-frame-sm);
+    overflow: hidden;
+  }
+
+  .field {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.75rem;
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 2px var(--rule);
+    font: inherit;
+  }
+
+  .field[aria-invalid='true'] {
+    box-shadow: inset 0 0 0 2px var(--danger);
+  }
+
+  .skeleton {
+    background: linear-gradient(100deg, var(--surface-quiet) 30%, var(--ac-paper) 50%, var(--surface-quiet) 70%);
+    background-size: 300% 100%;
+    animation: skeleton-sweep 1.5s ease-in-out infinite;
+    border-radius: 0.75rem;
+  }
+
+  .skeleton-deep {
+    background: var(--ac-cobalt-lift);
+    border-radius: 0.75rem;
+  }
+
+  /* The price, set in the display face: the number is the thing. */
+  .price-tag {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--heading);
+  }
+
+  /* A piece: white board, a painted band in its category's colours. */
+  .piece {
+    border-radius: var(--radius-frame);
+    background: var(--surface-raised);
+    box-shadow: 0 0 0 1px var(--rule), var(--shadow-soft);
+    overflow: hidden;
+    transition: transform var(--dur-exit) var(--ease-out), box-shadow var(--dur-exit) ease;
+  }
+
+  .piece:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px var(--rule), var(--shadow-lift);
   }
 }
 
-@layer utilities {
-  /* Custom shadows */
-  .shadow-soft {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+@keyframes skeleton-sweep {
+  from {
+    background-position: 100% 0;
   }
+  to {
+    background-position: 0 0;
+  }
+}
 
-  /* Organic animations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
+/* The cart wheel turns a quarter when something is added. */
+.cart-turn {
+  animation: cart-turn 700ms var(--ease-out);
+}
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+@keyframes cart-turn {
+  from {
+    transform: rotate(-90deg);
   }
+  to {
+    transform: rotate(0deg);
+  }
+}
 
-  @keyframes wiggle {
-    0%, 100% {
-      transform: rotate(-2deg);
-    }
-    50% {
-      transform: rotate(2deg);
-    }
+@keyframes sheet-in-right {
+  from {
+    transform: translateX(100%);
   }
+  to {
+    transform: translateX(0);
+  }
+}
 
-  .animate-wiggle {
-    animation: wiggle 1s ease-in-out infinite;
+@keyframes sheet-in-up {
+  from {
+    transform: translateY(100%);
   }
+  to {
+    transform: translateY(0);
+  }
+}
 
-  /* Text shadows for depth */
-  .text-shadow-sm {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+.overlay[data-state='open'] {
+  animation: fade-in var(--dur-enter) ease;
+}
 
-  /* Gradient text */
-  .text-gradient-artisan {
-    @apply bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent;
+.sheet[data-state='open'] {
+  animation: sheet-in-up var(--dur-enter) var(--ease-out);
+}
+
+@media (min-width: 768px) {
+  .sheet[data-state='open'] {
+    animation-name: sheet-in-right;
   }
+}
+
+.dialog-pop[data-state='open'] {
+  animation: fade-in var(--dur-enter) var(--ease-out);
 }

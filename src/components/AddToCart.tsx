@@ -1,0 +1,40 @@
+import { ShoppingBag } from 'lucide-react';
+import { announce, isPurchasable, useCart, type CatalogItem } from '@/core';
+import { useI18n } from '@/i18n';
+
+export const BASKET_EVENT = 'tsuru:basket-added';
+
+/** Adds the item and tells the header to settle the basket; sold-out items cannot be added. */
+export function AddToCart({ item, quantity = 1, variant = 'full', tone = 'accent', className = '' }: { item: CatalogItem; quantity?: number; variant?: 'full' | 'compact'; tone?: 'accent' | 'quiet'; className?: string }) {
+  const { t, langOf } = useI18n();
+  const add = useCart((s) => s.add);
+  const available = isPurchasable(item);
+
+  const onAdd = () => {
+    add(item, quantity);
+    announce(t('product.added', { name: item.name }));
+    window.dispatchEvent(new CustomEvent(BASKET_EVENT));
+  };
+
+  if (!available) {
+    return (
+      <button type="button" disabled className={`btn btn-quiet ${className}`}>
+        {t('product.soldOut')}
+      </button>
+    );
+  }
+
+  // On cards the button says "Agregar"; its accessible name still names the item.
+  const compact = variant === 'compact';
+  return (
+    <button
+      type="button"
+      onClick={onAdd}
+      aria-label={compact ? t('product.addNamed', { name: item.name }) : undefined}
+      className={`btn ${tone === 'quiet' ? 'btn-quiet' : 'btn-accent'} ${compact ? 'px-4 text-sm' : ''} ${className}`}
+    >
+      <ShoppingBag aria-hidden="true" className={`h-4 w-4 ${tone === 'quiet' ? 'text-accent-text' : ''}`} />
+      <span lang={langOf('product.add')}>{compact ? t('product.add.short') : t('product.add')}</span>
+    </button>
+  );
+}

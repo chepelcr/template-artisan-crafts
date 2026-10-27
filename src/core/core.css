@@ -1,0 +1,62 @@
+/* synced from templates/_core — edit there, then run `node scripts/templates/sync-core.mjs` */
+/*
+ * Behaviour styles shared by every template (no art direction).
+ * Templates import this from their index.css and style the rest.
+ */
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--brand, #111);
+  color: var(--brand-ink, #fff);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* The main region receives focus on navigation; it needs no ring of its own. */
+main[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* Route changes cross-fade; templates may name their own transitions. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* `?motion=reduce` sets this on <html> for review on any device. */
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

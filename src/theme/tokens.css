@@ -1,0 +1,64 @@
+/*
+ * Artisan Crafts design tokens — three layers (see DESIGN.md).
+ * 1 primitives → 2 semantic roles → 3 component tokens.
+ * `--brand*` and `--font-display` are set at run time from the store's branding.
+ */
+:root {
+  /* 1 · Primitives — Carreta pintada */
+  --ac-white: #FBFAF6;
+  --ac-sand: #F3EEE2;
+  --ac-paper: #FFFFFF;
+  --ac-red: #C62828;
+  --ac-sun: #F2B91B;
+  --ac-cobalt: #1E49A6;
+  --ac-cobalt-lift: #2A56B8;
+  --ac-leaf: #2F8F4E;
+  --ac-leaf-text: #25723F;
+  --ac-ink: #1D1B19;
+  --ac-ink-soft: #5E5750;
+
+  /* 2 · Semantic */
+  --surface: var(--ac-white);
+  --surface-quiet: var(--ac-sand);
+  --surface-raised: var(--ac-paper);
+  --surface-deep: var(--ac-cobalt);
+  --surface-deep-raised: var(--ac-cobalt-lift);
+  --ink: var(--ac-ink);
+  --ink-soft: var(--ac-ink-soft);
+  --ink-on-deep: var(--ac-white);
+  --ink-on-deep-soft: color-mix(in srgb, var(--ac-white) 82%, var(--ac-cobalt));
+  --heading: var(--ac-ink);
+  --rule: color-mix(in srgb, var(--ac-ink) 14%, transparent);
+  --rule-on-deep: color-mix(in srgb, var(--ac-white) 22%, transparent);
+  --accent: var(--brand, var(--ac-red));
+  --accent-ink: var(--brand-ink, #FFFFFF);
+  --accent-text: var(--brand-text, var(--ac-red));
+  --accent-2: var(--brand-2, var(--ac-cobalt));
+  --accent-2-ink: var(--brand-2-ink, #FFFFFF);
+  --offer: var(--ac-red);
+  --danger: var(--ac-red);
+  --success: var(--ac-leaf-text);
+  --focus: var(--ac-cobalt);
+  --focus-on-deep: var(--ac-sun);
+  --scrim: rgb(29 27 25 / 0.55);
+
+  /* 3 · Component */
+  --font-display: "Alegreya", "Noto Serif", Georgia, serif;
+  --font-text: "Alegreya Sans", "Noto Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius-frame: 1.25rem;
+  --radius-frame-sm: 0.875rem;
+  --radius-pill: 999px;
+  --paint-1: var(--ac-red);
+  --paint-2: var(--ac-sun);
+  --paint-3: var(--ac-cobalt);
+  --paint-4: var(--ac-leaf);
+  --shadow-soft: 0 1px 2px rgb(29 27 25 / 0.08), 0 12px 28px -16px rgb(29 27 25 / 0.35);
+  --shadow-lift: 0 2px 4px rgb(29 27 25 / 0.1), 0 24px 44px -20px rgb(29 27 25 / 0.45);
+  --tap: 2.75rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --max: 76rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
+  --dur-enter: 260ms;
+  --dur-exit: 170ms;
+}
