@@ -11,8 +11,13 @@ export function AddToCart({ item, quantity = 1, variant = 'full', tone = 'accent
   const available = isPurchasable(item);
 
   const onAdd = () => {
-    add(item, quantity);
-    announce(t('product.added', { name: item.name }));
+    const added = add(item, quantity);
+    if (added <= 0) {
+      announce(t('product.limit'));
+      return;
+    }
+    const message = t('product.added', { name: item.name });
+    announce(added < quantity ? `${message}. ${t('product.limit')}` : message);
     window.dispatchEvent(new CustomEvent(BASKET_EVENT));
   };
 

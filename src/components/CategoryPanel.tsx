@@ -22,7 +22,7 @@ export function CategoryPanel({ category, count, index }: { category: CatalogCat
           alt=""
           sizes="8.5rem"
           maxWidth={400}
-          fallback={<span className="grid h-full w-full place-items-center bg-[color:var(--ac-white)] font-display text-4xl text-heading">{category.name.slice(0, 1)}</span>}
+          fallback={<span className="grid h-full w-full place-items-center bg-[color:var(--ac-white)] font-display text-4xl text-[color:var(--ac-ink)]">{category.name.slice(0, 1)}</span>}
         />
       </span>
       <span className="mt-4 px-3 font-display text-[1.35rem] font-extrabold leading-tight group-hover:underline">{category.name}</span>

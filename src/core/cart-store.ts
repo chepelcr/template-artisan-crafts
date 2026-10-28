@@ -10,6 +10,7 @@ import { announce } from './a11y';
 import {
   addToLines,
   cartTotals,
+  lineKeyFor,
   migrateLegacyCart,
   reconcileCart,
   removeLine,
@@ -23,7 +24,8 @@ interface CartState {
   lines: CartLine[];
   isOpen: boolean;
   checkoutOpen: boolean;
-  add: (item: CatalogItem, quantity?: number) => void;
+  /** Returns how many units were actually added after applying stock limits. */
+  add: (item: CatalogItem, quantity?: number) => number;
   setQuantity: (key: string, quantity: number) => void;
   remove: (key: string) => void;
   clear: () => void;
@@ -62,11 +64,19 @@ function safeStorage(): Storage {
 
 export const useCart = create<CartState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       lines: [],
       isOpen: false,
       checkoutOpen: false,
-      add: (item, quantity = 1) => set((s) => ({ lines: addToLines(s.lines, item, quantity) })),
+      add: (item, quantity = 1) => {
+        const current = get().lines;
+        const key = lineKeyFor(item);
+        const before = current.find((line) => line.key === key)?.quantity ?? 0;
+        const lines = addToLines(current, item, quantity);
+        const after = lines.find((line) => line.key === key)?.quantity ?? 0;
+        set({ lines });
+        return Math.max(0, after - before);
+      },
       setQuantity: (key, quantity) => set((s) => ({ lines: setLineQuantity(s.lines, key, quantity) })),
       remove: (key) => set((s) => ({ lines: removeLine(s.lines, key) })),
       clear: () => set({ lines: [] }),

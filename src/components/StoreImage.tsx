@@ -19,8 +19,8 @@ interface StoreImageProps {
  * identity placeholder instead of a broken icon.
  */
 export function StoreImage({ src, alt, sizes = '100vw', maxWidth = 1600, priority, className, fallback }: StoreImageProps) {
-  const [failed, setFailed] = useState(false);
-  if (!src || failed) return <>{fallback}</>;
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  if (!src || failedSrc === src) return <>{fallback}</>;
   const attrs = imageAttributes(src, sizes, maxWidth);
   const priorityAttrs = priority ? ({ fetchpriority: 'high' } as Record<string, string>) : {};
   return (
@@ -30,7 +30,8 @@ export function StoreImage({ src, alt, sizes = '100vw', maxWidth = 1600, priorit
       alt={alt}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
-      onError={() => setFailed(true)}
+      onError={() => setFailedSrc(src)}
+      onLoad={() => setFailedSrc(null)}
       className={className ?? 'h-full w-full object-cover'}
     />
   );

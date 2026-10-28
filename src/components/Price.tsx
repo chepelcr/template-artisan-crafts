@@ -15,12 +15,12 @@ export function Price({ item, size = 'md' }: { item: CatalogItem; size?: 'md' | 
         </span>
       )}
       {item.percentOff !== null && (
-        <span className="rounded-full bg-offer px-2 py-0.5 text-xs font-semibold text-white">
+        <span className="rounded-full bg-offer px-2 py-0.5 text-xs font-semibold text-[color:var(--offer-ink)]">
           {t('product.percentOff', { percent: item.percentOff })}
         </span>
       )}
       {item.percentOff === null && item.onOffer && item.compareAtPrice === null && (
-        <span className="rounded-full bg-offer px-2 py-0.5 text-xs font-semibold text-white">{t('product.offer')}</span>
+        <span className="rounded-full bg-offer px-2 py-0.5 text-xs font-semibold text-[color:var(--offer-ink)]">{t('product.offer')}</span>
       )}
       {item.taxIncluded && <span className="text-xs text-ink-soft">{t('product.taxIncluded')}</span>}
     </div>

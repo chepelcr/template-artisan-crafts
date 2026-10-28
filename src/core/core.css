@@ -28,10 +28,65 @@ main[tabindex='-1']:focus {
   outline: none;
 }
 
-/* Route changes cross-fade; templates may name their own transitions. */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Capture only routed content. The navbar, footer and open dialogs stay live. */
+:root {
+  view-transition-name: none;
+}
+
+#contenido {
+  view-transition-name: storefront-content;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(storefront-content) {
   animation-duration: 220ms;
+}
+
+::view-transition-old(storefront-content) {
+  animation: storefront-page-out 180ms ease both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(storefront-content) {
+  animation: storefront-page-in 220ms ease both;
+  mix-blend-mode: normal;
+}
+
+@keyframes storefront-page-out {
+  to { opacity: 0; transform: translateY(-4px); }
+}
+
+@keyframes storefront-page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Colour changes animate without capturing or moving the navbar. */
+html[data-theme-changing],
+html[data-theme-changing] body,
+html[data-theme-changing] body *,
+html[data-theme-changing] body *::before,
+html[data-theme-changing] body *::after {
+  transition-property: background-color, color, border-color, box-shadow, fill, stroke;
+  transition-duration: 220ms;
+  transition-timing-function: ease;
+}
+
+.theme-toggle-icon {
+  flex-shrink: 0;
+  transform-origin: center;
+}
+
+html[data-theme-changing] .theme-toggle-icon {
+  animation: storefront-theme-turn 220ms ease both;
+}
+
+@keyframes storefront-theme-turn {
+  from { opacity: 0.4; transform: rotate(-35deg) scale(0.8); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -59,4 +114,10 @@ html[data-motion='reduce'] *::after {
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
+}
+
+html[data-motion='reduce']::view-transition-group(*),
+html[data-motion='reduce']::view-transition-old(*),
+html[data-motion='reduce']::view-transition-new(*) {
+  animation: none !important;
 }

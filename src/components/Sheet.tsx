@@ -11,7 +11,7 @@ interface SheetProps {
   description?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
-  /** 'side': right on wide screens, bottom on phones. 'center': a dialog. */
+  /** Full screen on phones; 'side' opens on the right and 'center' is a dialog on wide screens. */
   placement?: 'side' | 'center';
 }
 
@@ -26,12 +26,12 @@ export function Sheet({ open, onOpenChange, title, description, children, footer
         <Dialog.Content
           className={
             side
-              ? 'sheet fixed inset-x-0 bottom-0 z-50 flex max-h-[92dvh] flex-col overflow-hidden rounded-t-[1.75rem] bg-surface shadow-lift md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-[28rem] md:rounded-l-[1.75rem] md:rounded-tr-none'
-              : 'dialog-pop fixed inset-x-0 bottom-0 z-50 flex max-h-[94dvh] flex-col overflow-hidden rounded-t-[1.75rem] bg-surface shadow-lift sm:inset-auto sm:left-1/2 sm:top-1/2 sm:w-[min(40rem,calc(100vw-2rem))] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-[1.75rem]'
+              ? 'sheet fixed inset-0 z-50 flex h-dvh max-h-dvh flex-col overflow-hidden bg-surface shadow-lift md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-[28rem] md:rounded-l-[1.75rem] md:rounded-tr-none'
+              : 'dialog-pop fixed inset-0 z-50 flex h-dvh max-h-dvh flex-col overflow-hidden bg-surface shadow-lift sm:inset-auto sm:left-1/2 sm:top-1/2 sm:h-auto sm:max-h-[94dvh] sm:w-[min(40rem,calc(100vw-2rem))] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-[1.75rem]'
           }
         >
-          <PaintedBand className="h-3" />
-          <div className="flex items-start justify-between gap-4 border-b border-rule px-5 pb-4 pt-5 sm:px-6">
+          <PaintedBand className="h-3 shrink-0" />
+          <div className={`flex shrink-0 items-start justify-between gap-4 border-b border-rule px-5 pb-4 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6 ${side ? 'md:pt-5' : 'sm:pt-5'}`}>
             <div>
               <Dialog.Title className="font-display text-2xl text-heading">{title}</Dialog.Title>
               {description ? (
@@ -44,7 +44,7 @@ export function Sheet({ open, onOpenChange, title, description, children, footer
               <X aria-hidden="true" className="h-5 w-5" />
             </Dialog.Close>
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6">{children}</div>
+          <div className={`min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6 ${footer ? '' : side ? 'pb-[max(1.25rem,env(safe-area-inset-bottom))] md:pb-5' : 'pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-5'}`}>{children}</div>
           {footer && <div className="border-t border-rule px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 sm:px-6">{footer}</div>}
         </Dialog.Content>
       </Dialog.Portal>

@@ -23,6 +23,8 @@ export const baseEs: Dictionary = {
   'nav.menu': 'Menú',
   'nav.close': 'Cerrar',
   'nav.primary': 'Navegación principal',
+  'theme.toDark': 'Activar modo oscuro',
+  'theme.toLight': 'Activar modo claro',
 
   'demo.notice': 'Tienda de demostración: productos y precios ilustrativos.',
   'demo.badge': 'Demostración',
@@ -182,6 +184,8 @@ export const baseEn: Dictionary = {
   'nav.menu': 'Menu',
   'nav.close': 'Close',
   'nav.primary': 'Main navigation',
+  'theme.toDark': 'Enable dark mode',
+  'theme.toLight': 'Enable light mode',
 
   'demo.notice': 'Demo store: products and prices are illustrative.',
   'demo.badge': 'Demo',

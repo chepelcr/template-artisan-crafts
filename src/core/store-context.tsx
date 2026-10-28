@@ -7,7 +7,7 @@
  * Only the identity is required to render. Branding and contact failures are
  * not fatal: the template's defaults apply and contact blocks hide.
  */
-import { createContext, useContext, useEffect, useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   loadStorefrontConfig,
@@ -19,6 +19,7 @@ import {
 } from '@chepelcr/tsuru-storefront-sdk';
 import { storefrontClient } from './sdk';
 import { applyTheme, setFavicon, type ThemeDefaults } from './theme-bridge';
+import { useColorScheme } from './appearance';
 
 export type StoreStatus = 'loading' | 'ready' | 'unconfigured' | 'error';
 
@@ -47,6 +48,7 @@ export function StoreProvider({
   theme: ThemeDefaults;
   configUrl?: string;
 }) {
+  const { scheme } = useColorScheme();
   const configQuery = useQuery({
     queryKey: ['store-config', configUrl],
     queryFn: () => loadStorefrontConfig(configUrl),
@@ -79,9 +81,9 @@ export function StoreProvider({
   const theme = themeQuery.data ?? null;
   const organization = orgQuery.data ?? null;
 
-  useEffect(() => {
-    applyTheme(theme, defaults);
-  }, [theme, defaults]);
+  useLayoutEffect(() => {
+    applyTheme(theme, defaults, scheme);
+  }, [theme, defaults, scheme]);
 
   useEffect(() => {
     setFavicon(theme?.faviconUrl ?? theme?.logoUrl ?? organization?.logoUrl);

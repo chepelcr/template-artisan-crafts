@@ -11,12 +11,15 @@
  */
 import type { StorefrontTheme } from '@chepelcr/tsuru-storefront-sdk';
 import { ensureContrast, onColor, parseHex } from './color';
+import type { ColorScheme } from './appearance';
 
 export interface ThemeDefaults {
   brand: string;
   brand2: string;
   /** The main reading surface, to guard `--brand-text`. */
   surface: string;
+  /** The dark reading surface, used to keep store accents readable at night. */
+  darkSurface?: string;
   /** The template's display family as CSS (e.g. `"Fraunces", Georgia, serif`). */
   displayFont: string;
   /** Families the template already loads; others come from Google Fonts. */
@@ -38,13 +41,13 @@ export function googleFontHref(family: string): string {
   return `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, '+')}:wght@400;500;600;700&display=swap`;
 }
 
-export function themeVariables(theme: StorefrontTheme | null, defaults: ThemeDefaults): Record<string, string> {
+export function themeVariables(theme: StorefrontTheme | null, defaults: ThemeDefaults, scheme: ColorScheme = 'light'): Record<string, string> {
   const brand = validColor(theme?.primaryColor) ?? defaults.brand;
   const brand2 = validColor(theme?.secondaryColor) ?? defaults.brand2;
   const vars: Record<string, string> = {
     '--brand': brand,
     '--brand-ink': onColor(brand),
-    '--brand-text': ensureContrast(brand, defaults.surface, 4.5),
+    '--brand-text': ensureContrast(brand, scheme === 'dark' ? defaults.darkSurface ?? defaults.surface : defaults.surface, 4.5),
     '--brand-2': brand2,
     '--brand-2-ink': onColor(brand2),
   };
@@ -57,10 +60,10 @@ export function themeVariables(theme: StorefrontTheme | null, defaults: ThemeDef
 
 const FONT_LINK_ID = 'tsuru-org-font';
 
-export function applyTheme(theme: StorefrontTheme | null, defaults: ThemeDefaults): void {
+export function applyTheme(theme: StorefrontTheme | null, defaults: ThemeDefaults, scheme: ColorScheme = 'light'): void {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
-  for (const [name, value] of Object.entries(themeVariables(theme, defaults))) {
+  for (const [name, value] of Object.entries(themeVariables(theme, defaults, scheme))) {
     root.style.setProperty(name, value);
   }
   const font = safeFontFamily(theme?.fontFamily);

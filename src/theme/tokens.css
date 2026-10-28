@@ -36,6 +36,7 @@
   --accent-2: var(--brand-2, var(--ac-cobalt));
   --accent-2-ink: var(--brand-2-ink, #FFFFFF);
   --offer: var(--ac-red);
+  --offer-ink: #FFFFFF;
   --danger: var(--ac-red);
   --success: var(--ac-leaf-text);
   --focus: var(--ac-cobalt);
@@ -61,4 +62,22 @@
   --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
   --dur-enter: 260ms;
   --dur-exit: 170ms;
+}
+
+:root[data-color-scheme='dark'] {
+  --surface: #181D22;
+  --surface-quiet: #232931;
+  --surface-raised: #29323D;
+  --ink: #F7F1E4;
+  --ink-soft: #C6BEB2;
+  --heading: #FFF9EC;
+  --rule: rgb(247 241 228 / 0.2);
+  --offer: #FFABA2;
+  --offer-ink: #361713;
+  --danger: #FFABA2;
+  --success: #99DDB0;
+  --focus: var(--ac-sun);
+  --scrim: rgb(0 0 0 / 0.7);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 28px -16px rgb(0 0 0 / 0.65);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 24px 44px -20px rgb(0 0 0 / 0.75);
 }
