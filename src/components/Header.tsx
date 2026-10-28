@@ -121,7 +121,7 @@ export function Header() {
           </Dialog.Portal>
         </Dialog.Root>
       </div>
-      <PaintedBand className="h-2" />
+      <PaintedBand base="var(--surface)" className="h-2" />
     </header>
   );
 }
