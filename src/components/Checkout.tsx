@@ -1,3 +1,4 @@
+import {AccountCheckoutLink} from '@/core';
 import { CheckCircle2, MessageCircle } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import {
@@ -149,6 +150,7 @@ export function Checkout() {
 
       {(phase === 'form' || phase === 'submitting') && (
         <form noValidate onSubmit={submit} className="flex flex-col gap-5">
+          <AccountCheckoutLink t={t} />
           {showSummary && (
             <div role="alert" className="rounded-2xl bg-[color:color-mix(in_srgb,var(--danger)_10%,transparent)] p-3 text-sm font-semibold text-danger">
               {t('checkout.error.summary')}
