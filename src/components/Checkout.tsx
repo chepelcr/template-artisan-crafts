@@ -174,6 +174,9 @@ export function Checkout() {
                 onChange={(e) => set('name', e.target.value)}
               />
             </Field>
+            <Field field="email" label={t('checkout.email')} hint={t('checkout.email.hint')} error={errorText('email')}>
+              <input id={fieldId('email')} className="field" type="email" autoComplete="email" autoCapitalize="none" maxLength={254} required value={values.email} aria-invalid={errors.email ? true : undefined} aria-describedby={describedBy('email', true, errorText('email'))} onChange={event => set('email', event.target.value)} />
+            </Field>
             <Field field="phone" label={t('checkout.phone')} hint={t('checkout.phone.hint')} error={errorText('phone')}>
               <input
                 id={fieldId('phone')}
