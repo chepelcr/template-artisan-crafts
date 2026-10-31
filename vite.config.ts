@@ -26,6 +26,11 @@ export default defineConfig({
       },
     },
   },
+  // amazon-cognito-identity-js pulls in the `buffer` polyfill, which reads
+  // Node's `global`; the production build shims it, the dev pre-bundle does not.
+  optimizeDeps: {
+    esbuildOptions: { define: { global: 'globalThis' } },
+  },
   server: {
     port: 5173,
     proxy: devApi ? { '/api': { target: devApi, changeOrigin: true } } : undefined,

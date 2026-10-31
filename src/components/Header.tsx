@@ -1,8 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { Menu, ShoppingBag, X } from 'lucide-react';
+import { Menu, ShoppingBag, X, UserRound } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { useCart, useCartTotals, useIsDemo, useStore, useStoreName } from '@/core';
+import { useCart, useCartTotals, useIsDemo, useStore, useStoreName, useAccountLinks } from '@/core';
 import { useI18n } from '@/i18n';
 import { BASKET_EVENT } from './AddToCart';
 import { PaintedBand } from './PaintedBand';
@@ -41,6 +41,10 @@ export function Header() {
   const { count } = useCartTotals();
   const openCart = useCart((s) => s.open);
   const isActive = useIsActive();
+  // Barter and the account live in the store's own menus, not in a bar of their own.
+  const { barter, account } = useAccountLinks(t);
+  const navLinks = [...NAV, barter];
+  const menuLinks = [...navLinks, account];
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -64,7 +68,7 @@ export function Header() {
 
         <nav aria-label={t('nav.primary')} className="ml-auto hidden lg:block">
           <ul className="flex items-center gap-1">
-            {NAV.map(({ href, key }) => (
+            {navLinks.map(({ href, key }) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -77,6 +81,10 @@ export function Header() {
             ))}
           </ul>
         </nav>
+
+        <Link href={account.href} aria-label={account.label} title={account.label} aria-current={isActive(account.href) ? 'page' : undefined} className="icon-btn shrink-0 text-heading hover:bg-surface-quiet hidden lg:inline-grid">
+          <UserRound aria-hidden="true" className="h-5 w-5" />
+        </Link>
 
         <ThemeToggle />
 
@@ -105,7 +113,7 @@ export function Header() {
               </div>
               <nav aria-label={t('nav.primary')}>
                 <ul className="flex flex-col">
-                  {NAV.map(({ href, key }) => (
+                  {menuLinks.map(({ href, key }) => (
                     <li key={href}>
                       <Link
                         href={href}

@@ -1,4 +1,4 @@
-import {StoreAccountBar, StoreBarterPage, CustomerSsoCallback, CustomerAccountEntry} from '@/core';
+import {StoreBarterPage, CustomerSsoCallback, CustomerAccountEntry} from '@/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { Route, Switch } from 'wouter';
@@ -45,7 +45,6 @@ function Shell() {
     <>
       <SkipLink label={t('skip.content')} />
       <Header />
-      <StoreAccountBar t={t} />
       <main id={MAIN_ID}>
         <Switch>
           <Route path="/" component={Home} />
